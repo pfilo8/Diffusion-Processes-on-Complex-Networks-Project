@@ -3,75 +3,67 @@ import multiprocessing as mp
 from itertools import product
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import networkx as nx
 
-from simulations.qvoter_on_graph import qvoter_model_on_graph
+from simulations.diffusion_of_innovation_on_graph import diffusion_of_innovation_model_on_graph
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 PATH_BASEDIR = Path('results')
 
+# CONFIGURATION
+
 P = [0.5]
+F = [0.1]
 Q = [3, 4]
-N_STEPS = 100
+H = [0.01]
+
+T = 1000
+N_INDEPENDENT_RUNS = 100
+
 GRAPHS = {
+    "lattice": {
+        "generator": nx.grid_2d_graph,
+        "args": {
+            "n": 100,
+            "m": 100
+        }
+    },
     "complete": {
         "generator": nx.complete_graph,
         "args": {
             "n": 100
         }
-    },
-    "barabasi-albert": {
-        "generator": nx.barabasi_albert_graph,
-        "args": {
-            "m": 4,
-            "n": 100
-        }
-    },
-    "watts_strogatz-1": {
-        "generator": nx.watts_strogatz_graph,
-        "args": {
-            "n": 100,
-            "k": 4,
-            "p": 0.01
-        }
-    },
-    "watts_strogatz-2": {
-        "generator": nx.watts_strogatz_graph,
-        "args": {
-            "n": 100,
-            "k": 4,
-            "p": 0.2
-        }
     }
 }
 
 
-def calculate(p, q, graph):
-    logging.info(f"Current graph: {graph}, current p: {p}")
+def calculate(graph, p, f, q, h, t, n_independent_runs):
+    current_graph_path = f"{graph}/p-{p}/f-{f}/q-{q}/h-{h}"
+    logging.info(current_graph_path)
 
-    current_path = Path(PATH_BASEDIR).joinpath(f"{graph}").joinpath(f"q-{q}").joinpath(f"p-{p}")
+    current_path = Path(PATH_BASEDIR).joinpath(current_graph_path)
     current_path.mkdir(parents=True, exist_ok=True)
 
-    for i in range(N_STEPS):
+    for i in range(n_independent_runs):
         generator = GRAPHS[graph]['generator']
         args = GRAPHS[graph]['args']
 
         g = generator(**args)
-        results = qvoter_model_on_graph(g, p, q)
+        results = diffusion_of_innovation_model_on_graph(g, p, f, q, h, t)
         results = pd.DataFrame(results)
         results_path = current_path.joinpath(f'{i}.csv')
         results.to_csv(results_path, index=False)
 
 
-PATH_BASEDIR.mkdir(parents=True, exist_ok=True)
+if __name__ == '__main__':
+    PATH_BASEDIR.mkdir(parents=True, exist_ok=True)
 
-pool = mp.Pool(processes=8)
+    pool = mp.Pool(processes=mp.cpu_count())
 
-for p, q, graph in product(P, Q, GRAPHS):
-    pool.apply_async(calculate, args=(p, q, graph))
+    for graph, p, f, q, h in product(GRAPHS, P, F, Q, H):
+        pool.apply_async(calculate, args=(graph, p, f, q, h, T, N_INDEPENDENT_RUNS))
 
-pool.close()
-pool.join()
+    pool.close()
+    pool.join()
