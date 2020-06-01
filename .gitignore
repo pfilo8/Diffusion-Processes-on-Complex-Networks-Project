@@ -1,2 +1,13 @@
+# Cache
 .ipynb_checkpoints/
 __pycache__/
+.idea/
+
+# LaTeX
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
