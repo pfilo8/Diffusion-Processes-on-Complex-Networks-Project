@@ -10,24 +10,24 @@ from simulations.diffusion_of_innovation_on_graph import diffusion_of_innovation
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
-PATH_BASEDIR = Path('results')
+PATH_BASEDIR = Path('results/simulations')
 
 # CONFIGURATION
 
-P = [0.5]
+P = [0.1]
 F = [0.1]
-Q = [3, 4]
-H = [0.01]
+Q = [4]
+H = [0.09]
 
-T = 1000
-N_INDEPENDENT_RUNS = 100
+T = 100
+N_INDEPENDENT_RUNS = 10
 
 GRAPHS = {
     "lattice": {
         "generator": nx.grid_2d_graph,
         "args": {
-            "n": 100,
-            "m": 100
+            "n": 10,
+            "m": 10
         }
     },
     "complete": {

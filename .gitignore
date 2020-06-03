@@ -11,3 +11,7 @@ __pycache__/
 *.snm
 *.synctex.gz
 *.toc
+
+# CSV files
+*.csv
+
