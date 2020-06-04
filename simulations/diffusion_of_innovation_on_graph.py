@@ -6,12 +6,12 @@ VOTE = 'vote'
 
 def diffusion_of_innovation_model_on_graph(g: nx.Graph, p: float, f: float, q: int, h: float, t: int = 1000):
     """
-    G - graph
+    g - graph
     p - independence - probability spinson acts independently
     f - flexibility - probability spinson will change opinion if he is independent
     q - number of spinsons in panel
     h - advertising - probability spinson response to advertise
-    T - time of simulation
+    t - time of simulation
     """
     N = len(g.nodes())
     g = init_opinion(g)
