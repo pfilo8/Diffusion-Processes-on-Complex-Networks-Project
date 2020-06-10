@@ -132,10 +132,8 @@
 		\includegraphics[width=0.475\textwidth]{../resources/images/fig9-left.png}
 		\hfill
 		\includegraphics[width=0.475\textwidth]{../results/images/hp-lattice.png}
-		\caption{Left - publication; right - ours.}
+		\caption{Left - publication; right - our simulation with 300 MC steps and 50 independent runs on a grid lattice with 400 nodes.}
 	\end{figure}
-	Comparison - Fig. 9 (left)
-	Simulations
 \end{frame}
 
 \begin{frame}{Complete graph results}
@@ -143,39 +141,37 @@
 		\includegraphics[width=0.475\textwidth]{../resources/images/fig10-right.png}
 		\hfill
 		\includegraphics[width=0.475\textwidth]{../results/images/hp-complete.png}
-		\caption{Left - publication; right - ours.}
+		\caption{Left - publication; right - our simulation with 300 MC steps and 50 independent runs on a complete graph with 400 nodes.}
 	\end{figure}
-	Comparison - Fig. 10 (right)
-	Theoretical results
 \end{frame}
 
 \begin{frame}{Watts-Strogatz results}
 	\begin{figure}
 		\includegraphics[width=0.7\textwidth]{../results/images/hp-watts-strogatz.png}
-		\caption{Our work - simulation.}
+		\caption{Our work - simulation with 300 MC steps and 50 independent runs on a Watts-Strogatz ($k=4, p=0.3$) with 400 nodes.}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Barabasi-Albert results}
 	\begin{figure}
 		\includegraphics[width=0.7\textwidth]{../results/images/hp-barabasi-albert.png}
-		\caption{Our work - simulation.}
+		\caption{Our work - simulation with 300 MC steps and 50 independent runs on a Barabasi-Albert (2) graph with 400 nodes.}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Comparison of models}
 	
-	Try to find universal $h$
+	We wanted to try to find universal $h$.
 	\begin{table}[]
 		\begin{tabular}{l|llll}
 			& \multicolumn{3}{c}{p} &  \\
 			\hline
-			Graph           & 0.05   & 0.1   & 0.2  &  \\
+			Graph           & $0.05$   & $0.1$   & $0.2$  &  \\
 			\hline
-			2D Lattice grid &        &       &      &  \\
-			Complete graph  &        &       &      &  \\
-			Watts-Strogatz  &        &       &      &  \\
-			Barabasi-Albert &        &       &      & 
+			2D Lattice grid &   $<0.05$     &   $<0.05$    &  $<0.05$    &  \\
+			Complete graph  &   $0.17$      &    $0.15$    &  $0.12$     &  \\
+			Watts-Strogatz  &   $<0.05$     &   $<0.05$    & $<0.05$     &  \\
+			Barabasi-Albert &   $<0.05$     &   $<0.05$    & $<0.05$     & 
 		\end{tabular}
 	\end{table}
 \end{frame}
@@ -184,8 +180,9 @@
 
 \begin{frame}{Conclusions}
 	\begin{itemize}
-		\item Because of independence system never reaches an absorbing unanimous steady state.
-		\item Independence allows to investigate the system in which initially there are no adopters.
+		\item Smaller graphs converges much faster than bigger ones.
+		\item Shape of curves in time for different $h$ preserve for Watts-Strogatz and Barabasi-Albert graphs. (our results)
+		\item Shape of curves for $h^*(p)$ for Watts-Strogatz and Barabasi-Albert acts similarly to 2D lattice graph. Threshold of $h$ is smaller than $0.05$ and we haven't observed discontinuous transition. (our results)
 		\item Differences between the article and our simulations may arise from the use of much smaller graphs.
 	\end{itemize}
 \end{frame}
